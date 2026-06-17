@@ -107,7 +107,7 @@
         compatible = "zmk,input-listener";
         status = "disabled";
         device = <&glidepoint_split>;
-        input-processors = <&zip_xy_scaler 250 100>;
+        input-processors = <&zip_xy_scaler 1 4>; // 2x feels too fast in abs mode, lower to 0.25x
         scroller {
             layers = <1 2>;
             input-processors = <
