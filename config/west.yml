@@ -8,6 +8,8 @@ manifest:
       url-base: https://github.com/petejohanson/
     - name: caksoylar
       url-base: https://github.com/caksoylar
+    - name: geeksville
+      url-base: https://github.com/geeksville
   projects:
     - name: zmk
       remote: zmkfirmware
@@ -40,12 +42,13 @@ manifest:
     - name: zmk-rgbled-widget
       remote: caksoylar
       revision: v0.3
-    # Cirque trackpad input module. petejohanson/main is the driver the touchpad
-    # is confirmed working with (matches f4269af), running the pad in relative
-    # mode (no abs-rel-divisor in the overlay). The geeksville/kalbasit forks
-    # required absolute mode and left the pad dead on this build.
+    # EXPERIMENT (try-geeksville-touchpad branch): geeksville/toucan actually
+    # powers the pad down on idle (real touchpad power saving) via its PM
+    # suspend, unlike petejohanson/main which only masks the data-ready
+    # interrupt. Requires ABSOLUTE mode (abs-rel-divisor in toucan_right.overlay).
+    # This mirrors the last-known-working geeksville config (e35f32a).
     - name: cirque-input-module
-      remote: petejohanson
-      revision: main
+      remote: geeksville
+      revision: toucan
   self:
     path: config
