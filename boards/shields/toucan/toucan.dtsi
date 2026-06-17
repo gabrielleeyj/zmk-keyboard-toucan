@@ -2,6 +2,7 @@
 #include <dt-bindings/zmk/input_transform.h>
 #include <dt-bindings/zmk/matrix_transform.h>
 #include <physical_layouts.dtsi>
+#include <dt-bindings/input/input-event-codes.h>
 
 
 / {
@@ -115,6 +116,22 @@
                 &zip_scroll_scaler 1 5
                 &zip_scroll_transform INPUT_TRANSFORM_X_INVERT
             >;
+        };
+
+        // On the base layer, a finger on the pad holds the TAP layer (4) so the
+        // thumb keys act as mouse buttons (tap-to-click).
+        base {
+            layers = <0>;
+            input-processors = <&touch_processor>;
+        };
+    };
+
+    input_processors {
+        touch_processor: touch_processor {
+            compatible = "zmk,input-processor-behaviors";
+            #input-processor-cells = <0>;
+            codes = <INPUT_BTN_TOUCH>;   // the 'touch' pseudo-button from the pad
+            bindings = <&mo 4>;          // hold the TAP layer (4) while touched
         };
     };
 };
