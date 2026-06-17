@@ -8,10 +8,6 @@ manifest:
       url-base: https://github.com/petejohanson/
     - name: caksoylar
       url-base: https://github.com/caksoylar
-    - name: geeksville
-      url-base: https://github.com/geeksville
-    - name: kalbasit
-      url-base: https://github.com/kalbasit
   projects:
     - name: zmk
       remote: zmkfirmware
@@ -44,13 +40,12 @@ manifest:
     - name: zmk-rgbled-widget
       remote: caksoylar
       revision: v0.3
-    # Cirque trackpad input module — kalbasit fork carrying toucan stability
-    # fixes on top of geeksville's toucan branch (branch: toucan-fixes):
-    #   - re-arm DR IRQ on every early-return path (trackpad-wedge fix)
-    #   - report input with K_NO_WAIT so a full input queue can never block the
-    #     system workqueue (right-half lock-up fix, kalbasit/zmk-config#215)
+    # Cirque trackpad input module. petejohanson/main is the driver the touchpad
+    # is confirmed working with (matches f4269af), running the pad in relative
+    # mode (no abs-rel-divisor in the overlay). The geeksville/kalbasit forks
+    # required absolute mode and left the pad dead on this build.
     - name: cirque-input-module
-      remote: kalbasit
-      revision: c3e1fcfd8f9fba2e1f8f09ed664822870bce61ca
+      remote: petejohanson
+      revision: main
   self:
     path: config
