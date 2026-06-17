@@ -41,25 +41,7 @@ static void draw_percent_peripheral(lv_obj_t *canvas, const struct status_state 
     lv_canvas_draw_text(canvas, 80, 30, 60, &label_dsc, buf);
 }
 
-// Lightning bolt drawn to the left of the peripheral percentage when charging is
-// inferred from a rising battery trend (see screen.c). Mirrors the central bolt,
-// shifted right to sit by the peripheral bar.
-static void draw_charging_peripheral(lv_obj_t *canvas, const struct status_state *state) {
-    if (!state->charging_p) {
-        return;
-    }
-
-    lv_draw_rect_dsc_t bolt_dsc;
-    init_rect_dsc(&bolt_dsc, LVGL_FOREGROUND);
-
-    static const lv_point_t bolt[] = {
-        {89, 29}, {86, 35}, {88, 35}, {87, 40}, {91, 33}, {89, 33},
-    };
-    lv_canvas_draw_polygon(canvas, bolt, 6, &bolt_dsc);
-}
-
 void draw_battery_peripheral_status(lv_obj_t *canvas, const struct status_state *state) {
     draw_level_peripheral(canvas, state);
     draw_percent_peripheral(canvas, state);
-    draw_charging_peripheral(canvas, state);
 }

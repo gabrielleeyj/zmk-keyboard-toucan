@@ -95,59 +95,16 @@ ZMK_SUBSCRIPTION(widget_battery_status, zmk_usb_conn_state_changed);
 #endif /* IS_ENABLED(CONFIG_USB_DEVICE_STACK) */
 
 // R
-// The split link only carries the peripheral's battery percentage (standard BLE
-// Battery Service, capped 0-100), so its real USB/charging state never reaches
-// the central. Instead we infer charging from the trend of that percentage:
-//   - a rise over the previous reading marks it charging and resets the counter
-//   - a drop clears the bolt immediately (clearly not charging)
-//   - a flat reading increments the counter; once it passes the tolerance the
-//     bolt clears (covers a brief plateau between rises)
-//   - a full battery never shows the bolt
-// This is an approximation, not a true signal.
-#define PERIPHERAL_LEVEL_UNKNOWN 255
-#define PERIPHERAL_LEVEL_FULL 100
-#define PERIPHERAL_CHARGING_MAX_FLAT 3
-
-static bool infer_peripheral_charging(uint8_t level) {
-    static uint8_t last_level = PERIPHERAL_LEVEL_UNKNOWN;
-    static uint8_t flat_count;
-    static bool charging;
-
-    bool known = last_level != PERIPHERAL_LEVEL_UNKNOWN;
-    bool increased = known && level > last_level;
-    bool decreased = known && level < last_level;
-    last_level = level;
-
-    if (level >= PERIPHERAL_LEVEL_FULL) {
-        charging = false;
-        flat_count = 1;
-        return false;
-    }
-
-    if (increased) {
-        charging = true;
-        flat_count = 1;
-    } else if (decreased) {
-        charging = false;
-    } else if (charging) {
-        flat_count++;
-        if (flat_count > PERIPHERAL_CHARGING_MAX_FLAT) {
-            charging = false;
-        }
-    }
-
-    return charging;
-}
-
 static void set_battery_peripheral_status(struct zmk_widget_screen *widget,
                                struct battery_peripheral_status_state state) {
-    ARG_UNUSED(state);
+#if IS_ENABLED(CONFIG_USB_DEVICE_STACK)
+    widget->state.charging_p = state.usb_present;
+#endif /* IS_ENABLED(CONFIG_USB_DEVICE_STACK) */
 
     uint8_t level;
     zmk_split_central_get_peripheral_battery_level(0, &level);
 
     widget->state.battery_p = level;
-    widget->state.charging_p = infer_peripheral_charging(level);
     draw_top(widget->obj, widget->cbuf, &widget->state);
 }
 
