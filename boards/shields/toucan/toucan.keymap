@@ -2,13 +2,11 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/outputs.h>
-#include <dt-bindings/zmk/pointing.h>
 
 #define BASE 0
 #define NAV  1
 #define SYM  2
 #define ADJ  3
-#define TAP  4
 
 / {
     conditional_layers {
@@ -97,20 +95,6 @@
                                    &kp LGUI &mo NAV &kp SPACE   &kp RET &mo 2 &kp RALT
             >;
         };
-
-        // Activated while a finger is on the touchpad (via touch_processor in
-        // toucan.dtsi). The right thumb cluster becomes mouse buttons so you can
-        // tap-to-click: keep a finger on the pad and press a thumb to click.
-        tap {
-            display-name = "TAP";
-            bindings = <
-                &trans &trans &trans &trans &trans &trans   &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans   &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans   &trans &trans &trans &trans &trans &trans
-                                     &trans &trans &trans   &mkp LCLK &mkp RCLK &mkp MCLK
-            >;
-        };
-
         extra_1 {
                 status = "reserved";
         };
