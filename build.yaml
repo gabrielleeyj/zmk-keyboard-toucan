@@ -29,9 +29,10 @@ include:
     shield: settings_reset
   # DIAGNOSTIC (diag/bare-left): bare central keyboard — no nice_view display,
   # no rgbled_adapter. Isolates whether the left half boots as a keyboard at all
-  # once the shield peripherals are removed. USB logging gives a CDC console to
-  # capture the boot/crash log.
+  # once the shield peripherals are removed. Studio snippet gives a USB CDC
+  # serial so we get a clear sign of life on enumeration.
   - board: seeeduino_xiao_ble
     shield: toucan_left
-    cmake-args: -DCONFIG_ZMK_USB_LOGGING=y
+    snippet: studio-rpc-usb-uart
+    cmake-args: -DCONFIG_ZMK_STUDIO=y
     artifact-name: toucan_left_DIAG_bare
