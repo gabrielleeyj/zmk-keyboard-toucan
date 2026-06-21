@@ -20,8 +20,8 @@ void draw_layer_status(lv_obj_t *canvas, const struct status_state *state) {
     const char *layer_name = zmk_keymap_layer_name(zmk_keymap_layer_index_to_id(state->layer_index));
 
     if (layer_name == NULL || layer_name[0] == '\0') {
-        sprintf(fallback_layer_name, "L#%" PRIu8, state->layer_index);
-        
+        snprintf(fallback_layer_name, sizeof(fallback_layer_name), "L#%" PRIu8, state->layer_index);
+
         layer_name = fallback_layer_name;
     }
 

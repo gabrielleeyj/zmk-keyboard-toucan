@@ -17,7 +17,6 @@ struct status_state {
     uint8_t battery;
     uint8_t battery_p;
     bool charging;
-    bool charging_p;
 #if !IS_ENABLED(CONFIG_ZMK_SPLIT) || IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
     struct zmk_endpoint_instance selected_endpoint;
     int active_profile_index;
@@ -30,7 +29,6 @@ struct status_state {
 #endif
 };
 
-void to_uppercase(char *str);
 void fill_background(lv_obj_t *canvas);
 void init_rect_dsc(lv_draw_rect_dsc_t *rect_dsc, lv_color_t bg_color);
 void init_line_dsc(lv_draw_line_dsc_t *line_dsc, lv_color_t color, uint8_t width);

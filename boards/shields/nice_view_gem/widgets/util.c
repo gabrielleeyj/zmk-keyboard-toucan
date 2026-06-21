@@ -1,17 +1,9 @@
 #include <zephyr/kernel.h>
 #include "util.h"
-#include <ctype.h>
 
-
-void to_uppercase(char *str) {
-    for (int i = 0; str[i] != '\0'; i++) {
-        str[i] = toupper(str[i]);
-    }
-}
 
 void fill_background(lv_obj_t *canvas) {
     lv_draw_rect_dsc_t rect_black_dsc;
-    rect_black_dsc.bg_color = lv_color_white();  // set background color to white
     init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
 
     lv_canvas_draw_rect(canvas, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, &rect_black_dsc);
