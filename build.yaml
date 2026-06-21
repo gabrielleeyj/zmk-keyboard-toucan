@@ -19,13 +19,15 @@
 #
 ---
 include:
-  # debug/ble-usb-logging: studio dropped here because ZMK_USB_LOGGING and the
-  # studio-rpc-usb-uart snippet both claim the USB CDC ACM endpoint.
+  # debug/ble-usb-logging: left central built with the zmk-usb-logging snippet
+  # (adds the CDC ACM console node + enables logging). Studio dropped here since
+  # it isn't needed for diagnosis. USB logging only works on the central, so the
+  # right peripheral stays a normal build.
   - board: seeeduino_xiao_ble
     shield: toucan_left rgbled_adapter nice_view_gem
+    snippet: zmk-usb-logging
     artifact-name: toucan_left_logging
   - board: seeeduino_xiao_ble
     shield: toucan_right rgbled_adapter
-    artifact-name: toucan_right_logging
   - board: seeeduino_xiao_ble
     shield: settings_reset
