@@ -55,7 +55,7 @@
    pinctrl-0 = <&spi0_default>;
    pinctrl-1 = <&spi0_sleep>;
    pinctrl-names = "default", "sleep";
-   cs-gpios = <&gpio0 3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;  // NO pull-up: it breaks SPI comms with the pad (proven on main)
+   cs-gpios = <&gpio0 3 GPIO_ACTIVE_LOW>;  // NO pull-up: it breaks SPI comms with the pad (proven on main)
    glidepoint:  glidepoint@0 {
         compatible = "cirque,pinnacle";
         reg = <0>;
